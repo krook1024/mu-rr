@@ -121,7 +121,7 @@ if rsc == 200:
 		print("\t> Elosztható pontok:", pontok)
 		print("\t> Kaszt:", kaszt)
 
-		if kaszt == 'GM' or kaszt == 'SM' or kaszt == 'BSum' or kaszt == 'DIM':
+		if kaszt == 'GM' or kaszt == 'SM':
 			t_str = 1000
 			pontok += -1000
 
@@ -131,11 +131,24 @@ if rsc == 200:
 			pontok -= (t_ene + t_agi)
 
 			t_vit = pontok
+			pontok = 0
+		elif kaszt == 'BSum' or kaszt == 'DimM':
+			t_str = 1000
+			pontok -= 1000
+
+			t_ene = int(pontok * 0.3)
+			t_agi = int(pontok * 0.7)
+
+			pontok -= (t_ene + t_agi)
+
+			t_vit = pontok
+			pontok = 0
 		else:
 			t_str = int(pontok/3)
 			t_ene = int(pontok/3)
 			t_agi = int(pontok/3)
 			t_vit = 0
+			pontok = 0
 
 		print("\tSTR:", t_str)
 		print("\tAGI:", t_agi)
