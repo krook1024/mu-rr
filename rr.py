@@ -1,16 +1,22 @@
+# Imports
+
 import requests
 import pandas as pd
-from pyfiglet import Figlet
 
+# Figlet
+from pyfiglet import Figlet
 f = Figlet(font='slant')
-print(f.renderText('     Mu-RR'))
+
+def drawFig():
+	print(f.renderText('     Mu-RR'))
+
+# User settings
 
 karakterek = {'moneyposse', 'KROOK'}
 username = ''
 password = ''
 
 for karakter in karakterek:
-
 	print("[!] A MuRR indítása", karakter, "nevű karakter használatával...")
 
 	post_fields = {
@@ -193,3 +199,5 @@ for karakter in karakterek:
 		# x post request ugyanarra a linkre, pontok elosztása...
 	else:
 		print("[!] Hiba: A szerver nem válaszol...")
+		
+input()
