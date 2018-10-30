@@ -72,27 +72,25 @@ def reset(charnum):
 
     if not level == 400:
         print("The character's level is below 400.")
-        input()
-        quit()
-
-    post_fields = {
-        'ps_str': '',
-        'ps_agi': '',
-        'ps_vit': '',
-        'ps_ene': '',
-        'ps_newcharname': '',
-        'ps_reset': 'on',
-        'Submit.x': '56',
-        'Submit.y': '7'
-    }
-
-    r = s.post(r.url, data=post_fields)
-    r.encoding = 'ISO-8859-2'
-
-    if "reszetelve!" in r.text:
-        print("Character successfully reseted.\n\n")
     else:
-        print("Some kind of error occured during the reset process.")
+        post_fields = {
+            'ps_str': '',
+            'ps_agi': '',
+            'ps_vit': '',
+            'ps_ene': '',
+            'ps_newcharname': '',
+            'ps_reset': 'on',
+            'Submit.x': '56',
+            'Submit.y': '7'
+        }
+
+        r = s.post(r.url, data=post_fields)
+        r.encoding = 'ISO-8859-2'
+
+        if "reszetelve!" in r.text:
+            print("Character successfully reseted.\n\n")
+        else:
+            print("Some kind of error occured during the reset process.")
 
 def addStats(charnum):
     charnum += 40
@@ -195,13 +193,12 @@ def charInfo(charnum):
 
     print(print(tabulate(stats, showindex="never", tablefmt="fancy_grid")))
 
-
 # Main
 clear()
 
 print('Welcome to MuOnline-RR.')
 
-if config['User']['Username'] and config['User']['Password']:
+if config['User']:
     username = config['User']['Username']
     password = config['User']['Password']
 
@@ -215,41 +212,45 @@ clear()
 
 print('Trying to log into muonline.hu using the proivded credentials...')
 
-login(username, password)
-
-clear()
-
-print('Found Utopia characters:\n')
-printCharacters(characters)
-
-print('\n\nAvailable tasks are the following:')
-print('1) - Reset character')
-print('2) - Add stats')
-print('3) - Reset & add stats')
-print('4) - Display character info')
-print('\n0) - Quit')
-
-task = int(input('\n\nPlease select a task: '))
-
-if task == 1:
-    characternum = int(input('Please select which character (1-5): '))
+while True:
+    login(username, password)
+    
     clear()
-    reset(characternum - 1)
-elif task == 2:
-    characternum = int(input('Please select which character (1-5): '))
-    clear()
-    addStats(characternum - 1)
-elif task == 3:
-    characternum = int(input('Please select which character (1-5): '))
-    clear()
-    reset(characternum - 1)
-    addStats(characternum - 1)
-elif task == 4:
-    characternum = int(input('Please select which character (1-5): '))
-    charInfo(characternum - 1)
-elif task == 0:
-    quit()
-else:
-    print('That\'s not a valid task. The program will now exit.')
-    input()
-    quit()
+
+    print('Found Utopia characters:\n')
+    printCharacters(characters)
+
+    print('\n\nAvailable tasks are the following:')
+    print('1) - Reset character')
+    print('2) - Add stats')
+    print('3) - Reset & add stats')
+    print('4) - Display character info')
+    print('\n0) - Quit')
+
+    task = int(input('\n\nPlease select a task: '))
+
+    if task == 1:
+        characternum = int(input('Please select which character (1-5): '))
+        clear()
+        reset(characternum - 1)
+    elif task == 2:
+        characternum = int(input('Please select which character (1-5): '))
+        clear()
+        addStats(characternum - 1)
+    elif task == 3:
+        characternum = int(input('Please select which character (1-5): '))
+        clear()
+        reset(characternum - 1)
+        addStats(characternum - 1)
+    elif task == 4:
+        characternum = int(input('Please select which character (1-5): '))
+        charInfo(characternum - 1)
+        input()
+    elif task == 0:
+        quit()
+    else:
+        print('That\'s not a valid task.')
+        input()
+
+# Keep window open
+input()
